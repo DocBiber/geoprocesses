@@ -59,7 +59,8 @@ function renderSection(type) {
   paths.forEach(id => $(id).setAttribute("d", shape[{ "left-crust": "left", "right-crust": "right", water: "water", mountains: "mountain", "plate-boundary": "boundary" }[id]]));
   $("left-texture").setAttribute("d", shape.left);
   $("right-texture").setAttribute("d", shape.right);
-  const arrows = type === "collision"
+  const converging = ["subduction", "closing", "collision"].includes(type);
+  const arrows = converging
     ? '<path d="M270 260h75l-13-10m13 10-13 10M630 260h-75l13-10m-13 10 13 10" fill="none"/>'
     : '<path d="M270 260h-70l13-10m-13 10 13 10M630 260h70l-13-10m13 10-13 10" fill="none"/>';
   $("arrows").innerHTML = arrows;
