@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#123b50" />
+    <meta name="description" content="Interaktive Animationen geomorphologischer Prozesse" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>GeoDynamik</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">INTERAKTIVER GEOATLAS</p>
+        <h1>GeoDynamik</h1>
+      </div>
+      <div class="header-actions">
+        <button id="install-button" class="button secondary" hidden>Installieren</button>
+        <button id="language-button" class="button secondary" aria-label="Sprache wechseln">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="eyebrow" data-i18n="module">MODUL 01</p>
+        <h2 data-i18n="title">Der Wilson-Zyklus</h2>
+        <p data-i18n="subtitle">Von der kontinentalen Riftbildung zum Ozean und zurück zur Gebirgsbildung.</p>
+      </section>
+
+      <section class="workspace" aria-label="Animation und Steuerung">
+        <article class="visualization-card">
+          <div class="view-controls" role="group" aria-label="Perspektive">
+            <button class="view-button active" data-view="section" data-i18n="viewSection">Schnitt</button>
+            <button class="view-button" data-view="oblique" data-i18n="viewOblique">Schrägoben</button>
+            <button class="view-button" data-view="top" data-i18n="viewTop">Von oben</button>
+          </div>
+          <div class="scene-wrap">
+            <svg id="scene" viewBox="0 0 900 430" role="img" aria-labelledby="scene-title scene-description">
+              <title id="scene-title">Animation des Wilson-Zyklus</title>
+              <desc id="scene-description">Geologische Querschnittsansicht der aktuellen Phase</desc>
+              <defs>
+                <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#ccebf2" />
+                  <stop offset="100%" stop-color="#eef8f5" />
+                </linearGradient>
+                <linearGradient id="mantle" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#e97c54" />
+                  <stop offset="100%" stop-color="#8d2832" />
+                </linearGradient>
+                <pattern id="crust-lines" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+                  <line x1="0" y1="0" x2="0" y2="16" stroke="#ac6849" stroke-width="2" opacity=".28" />
+                </pattern>
+              </defs>
+              <rect width="900" height="430" fill="url(#sky)" />
+              <g id="section-scene">
+                <path id="mantle" d="M0 300 Q180 250 330 300 Q450 365 570 300 Q730 250 900 300 L900 430 L0 430Z" fill="url(#mantle)" />
+                <path id="convection-left" d="M245 348 C150 365 130 290 225 290" fill="none" stroke="#f4ad68" stroke-width="7" stroke-linecap="round" opacity=".7" />
+                <path id="convection-right" d="M655 348 C750 365 770 290 675 290" fill="none" stroke="#f4ad68" stroke-width="7" stroke-linecap="round" opacity=".7" />
+                <path id="water" d="" fill="#247aa1" opacity=".92" />
+                <path id="left-crust" d="" fill="#bd7859" />
+                <path id="right-crust" d="" fill="#bd7859" />
+                <path id="left-texture" d="" fill="url(#crust-lines)" />
+                <path id="right-texture" d="" fill="url(#crust-lines)" />
+                <path id="mountains" d="" fill="#7e624b" />
+                <path id="plate-boundary" d="" fill="none" stroke="#f7e3ad" stroke-width="4" stroke-dasharray="9 7" />
+                <g id="arrows" fill="#f8faf7" stroke="#174356" stroke-width="2"></g>
+              </g>
+              <g id="top-scene" hidden>
+                <path id="top-land" d="" fill="#bd7859" />
+                <path id="top-ocean" d="" fill="#247aa1" />
+                <path id="top-boundary" d="" fill="none" stroke="#f7e3ad" stroke-width="5" stroke-dasharray="11 8" />
+                <path id="top-relief" d="" fill="none" stroke="#8c543d" stroke-width="3" opacity=".65" />
+              </g>
+              <g id="oblique-scene" hidden>
+                <path id="oblique-mantle" d="" fill="url(#mantle)" />
+                <path id="oblique-land" d="" fill="#bd7859" />
+                <path id="oblique-ocean" d="" fill="#247aa1" />
+                <path id="oblique-ridge" d="" fill="none" stroke="#f7e3ad" stroke-width="5" />
+              </g>
+              <text id="scene-label" x="38" y="55" fill="#123b50" font-size="22" font-weight="700"></text>
+            </svg>
+          </div>
+          <div class="legend">
+            <span><i class="land"></i><span data-i18n="continentalCrust">Kontinentale Kruste</span></span>
+            <span><i class="ocean"></i><span data-i18n="ocean">Ozean</span></span>
+            <span><i class="mantle-key"></i><span data-i18n="mantle">Oberer Mantel</span></span>
+          </div>
+        </article>
+
+        <aside class="controls-card">
+          <p class="eyebrow" data-i18n="currentPhase">AKTUELLE PHASE</p>
+          <h3 id="phase-name"></h3>
+          <p id="phase-description"></p>
+          <div class="playback">
+            <button id="play-button" class="play-button" aria-label="Animation abspielen">▶</button>
+            <input id="phase-slider" type="range" min="0" max="5" value="0" step="1" aria-label="Phase des Wilson-Zyklus" />
+          </div>
+          <div id="phase-markers" class="phase-markers"></div>
+          <p class="time" id="time-label"></p>
+        </aside>
+      </section>
+
+      <section class="references">
+        <div class="references-heading">
+          <p class="eyebrow" data-i18n="spaceReference">RAUMBEZUG</p>
+          <h2 data-i18n="referenceTitle">Die Animation im geographischen Kontext</h2>
+        </div>
+        <div class="reference-grid">
+          <article class="reference-card">
+            <span class="reference-icon" aria-hidden="true">◎</span>
+            <h3 data-i18n="location">Ort &amp; Koordinaten</h3>
+            <p id="location-reference"></p>
+            <a id="map-link" target="_blank" rel="noopener" data-i18n="openMap">In OpenStreetMap öffnen</a>
+          </article>
+          <article class="reference-card">
+            <span class="reference-icon" aria-hidden="true">◇</span>
+            <h3 data-i18n="geology">Geologischer Bezug</h3>
+            <p id="geology-reference"></p>
+          </article>
+          <article class="reference-card">
+            <span class="reference-icon" aria-hidden="true">↗</span>
+            <h3 data-i18n="literature">Literatur</h3>
+            <p id="literature-reference"></p>
+            <a id="literature-link" target="_blank" rel="noopener" data-i18n="openSource">Quelle öffnen</a>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>GeoDynamik · <span data-i18n="footer">Geowissenschaftliche Prozesse verständlich machen</span></span>
+      <span data-i18n="prototype">Prototyp</span>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+:root {
+  --ink: #123b50;
+  --muted: #58717d;
+  --paper: #f6f4ed;
+  --card: #fffdf7;
+  --line: #d6dbd3;
+  --accent: #d26445;
+  --ocean: #247aa1;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button, input { font: inherit; }
+.site-header, main, footer { max-width: 1220px; margin: auto; }
+.site-header { min-height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 18px 30px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0; font-size: 1.55rem; letter-spacing: -.03em; }
+h2 { font: 700 clamp(2rem, 4vw, 3.4rem)/1.08 Georgia, serif; letter-spacing: -.035em; margin-bottom: .55rem; }
+h3 { font: 700 1.35rem/1.2 Georgia, serif; }
+.eyebrow { color: var(--accent); margin-bottom: .45rem; font-size: .72rem; font-weight: 800; letter-spacing: .15em; }
+.header-actions { display: flex; gap: .7rem; }
+.button, .view-button { border: 1px solid var(--ink); border-radius: 3px; background: transparent; color: var(--ink); cursor: pointer; font-size: .83rem; font-weight: 700; padding: .55rem .8rem; }
+.button:hover, .view-button:hover, .view-button.active { background: var(--ink); color: white; }
+.intro { max-width: 720px; padding: 50px 30px 35px; }
+.intro > p:last-child { color: var(--muted); font-size: 1.1rem; }
+.workspace { display: grid; grid-template-columns: minmax(0, 2fr) minmax(270px, .8fr); gap: 22px; padding: 0 30px; }
+.visualization-card, .controls-card, .reference-card { background: var(--card); border: 1px solid var(--line); box-shadow: 0 4px 18px #123b5010; }
+.visualization-card { padding: 18px; }
+.view-controls { display: flex; gap: 6px; margin-bottom: 14px; }
+.view-button { border-color: transparent; }
+.scene-wrap { overflow: hidden; background: #ccebf2; }
+#scene { display: block; width: 100%; min-height: 320px; }
+.legend { display: flex; flex-wrap: wrap; gap: 15px; padding: 14px 3px 0; color: var(--muted); font-size: .78rem; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 14px; height: 14px; display: inline-block; }
+.land { background: #bd7859; }.ocean { background: var(--ocean); }.mantle-key { background: #d86649; }
+.controls-card { padding: 28px; align-self: stretch; }
+.controls-card > p:not(.eyebrow) { color: var(--muted); min-height: 125px; }
+.playback { display: flex; align-items: center; gap: 14px; }
+.play-button { width: 42px; height: 42px; border: 0; border-radius: 50%; background: var(--accent); color: white; cursor: pointer; }
+input[type="range"] { accent-color: var(--accent); flex: 1; }
+.phase-markers { display: flex; justify-content: space-between; margin: 11px 0 0 55px; color: var(--muted); font-size: .72rem; }
+.phase-markers button { border: 0; background: none; color: inherit; cursor: pointer; padding: 2px; }
+.phase-markers button.active { color: var(--accent); font-weight: 800; }
+.time { color: var(--accent); font-size: .85rem; font-weight: 700; margin-top: 26px; }
+.references { padding: 90px 30px 70px; }
+.references-heading { max-width: 640px; margin-bottom: 25px; }
+.reference-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.reference-card { padding: 27px; }
+.reference-card p { color: var(--muted); min-height: 76px; }
+.reference-icon { color: var(--accent); font-size: 2rem; }
+a { color: var(--ink); font-size: .87rem; font-weight: 750; text-underline-offset: 4px; }
+footer { border-top: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; padding: 24px 30px; font-size: .8rem; }
+@media (max-width: 800px) {
+  .workspace, .reference-grid { grid-template-columns: 1fr; }
+  .intro { padding-top: 25px; }
+  .controls-card > p:not(.eyebrow) { min-height: auto; }
+  .reference-card p { min-height: auto; }
+}
+@media (max-width: 480px) {
+  .site-header { padding: 14px 18px; }
+  .workspace, .references, .intro { padding-left: 18px; padding-right: 18px; }
+  .view-controls { flex-wrap: wrap; }
+  footer { padding: 20px 18px; }
+}
